@@ -1,0 +1,15 @@
+Classes abstratas:
+Classes abstratas, trabalham com herança. Quando uma classe é abstrata, significa que ela vai possuir subclasses. Por ela ser abstrata, ela passa a ser como se fosse
+um molde, um molde para suas classes herdeiras. Se ela possuir algum construtor, suas subclasses também devem possuir.
+
+Métodos abstratos:
+Metodos abstratos, são como um indicador de que as subclasses obrigatoriamente vão ter que possuir aquele método sobrescrito.
+Eles dentro da classe abstrata (classe mae) nao sao uteis. Eles ganham uma funçao dentro das subclasses.
+A partir do momento que se tem um metodo abstrato, todas suas subclasses deverão possuir esses métodos subscritos, nem que
+seja em branco.
+
+Se uma classe abstrata (Funcionario(pai)) for subclasse de outra classe abstrata (Pessoa(avô)) que possui um método abstrato (imprime),
+as subclasses da classe pai, no caso Gerente e Desenvolvedor, vão ter obrigatóriamente possuir também esse método.
+
+Uma das formas de passar esse método pra elas, é sobreescrevendo o metodo de forma concreto na classe pai, assim, as suas subclasses
+automaticamente vão adquirir esse método.

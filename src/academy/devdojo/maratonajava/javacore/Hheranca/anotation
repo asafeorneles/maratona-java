@@ -1,0 +1,10 @@
+Herança se trata de classes que possuem outras classes (subclasses).
+Uma classe pode conter outra classe que herda desse caso, podendo usar o termo é um.
+Funcionario herda de uma pessoa, pois funcionário É UMA PESSOA.
+
+Se a classe pai tem um construtor, a subclasse também deve ter.
+Podemos criar um construtor com alguma açao a mais. Usamos o super(parametros); e em seguida adicionamos o que a gente deseja.
+Podemos tambem sobrescrever métodos. Se quisermos adicionar alguma funçao mantendo as anteriores vindas da classe pai,
+usamos tambem o "super.nomeDoMetodo();"
+
+

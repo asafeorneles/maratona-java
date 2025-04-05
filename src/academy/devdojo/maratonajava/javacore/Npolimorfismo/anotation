@@ -1,0 +1,12 @@
+No polimorfismo, se pode ter uma variavel do tipo referência, abstrata que faz referencia para seus objetos concretos. EX:
+
+Produto é uma classe abstrata. Nao exixte em si, mas existem tipos de produtos (computador, tomate, televisão). Esses produtos
+ herdam produto pois cada um deles É UM PRODUTO.
+Com isso, nao precisa nescessariamente criar uma referencia de cada tipo de produto, apenas uma referencia do propio produto
+ para fazer referencia pros objetos:
+ Produto produto = new Computador();
+
+ É o parametro tipo produto, é aceito pois computador É UM PRODUTO.
+
+Com isso, podemos otimizar o código e criar apenas 1 método produto para atender a todos os objetos que herdam dele
+ em vez de criar um metodo pra cada tipo de produto.

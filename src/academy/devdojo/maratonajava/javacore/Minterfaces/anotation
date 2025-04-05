@@ -1,0 +1,20 @@
+Nas interfaces por padrão, seus métodos são abstratos e publicos. Ou seja, suas implementaçoes obrigatoriamente devem
+ ter os métodos sobrescritos. (Metodos abstracts sao metodos que soam como um modelo apenas).
+
+Uma das funcionalidades das interfaqces é que uma classe pode ter multiplas implementaçoes de interfaces. DatabaseLoader
+ por exemplo, tem implementação de DataLoader e  DataRemove.
+
+Como os métodos de uma interface sao abstratos, se adicionarmos um metodo abstrato em uma interface, quebrariasmos
+ o codigo de suas implementaçoes. Para isso se tem o default. O default é um tipo de método que basicamente o torna
+ concreto. (Nao precisa obrigatoriamente ser sobrescrito nas implementaçoes e nas heranças).
+
+Não é possivel uma subclasse ter um modificador de acesso menos restritivo do que sua superclasse.
+ Por padrão, os atributos das classes possuem o modificador default
+ private -> default -> protected -> public
+public: Permite o acesso a um atributo de qualquer lugar
+
+private: Restringe o acesso a um atributo apenas à própria classe
+default: Restringe o acesso a um atributo apenas ao mesmo pacote
+protected: Permite o acesso a um atributo por classes do mesmo pacote e por subclasses
+public: Permite o acesso a um atributo de qualquer lugar
+final: Impede que o valor de um atributo seja alterado depois de já ter sido atribuído um valor
