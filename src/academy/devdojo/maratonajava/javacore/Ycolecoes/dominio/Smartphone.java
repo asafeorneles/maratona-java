@@ -31,6 +31,14 @@ public class Smartphone {
         return serialNumber == null ? 0 : serialNumber.hashCode(); // Se serialNumber for nulo, retorna 0. Se não, retorna o hashCode definido pelo próprio java/
     }
 
+    @Override
+    public String toString() {
+        return "Smartphone{" +
+                "serialNumber='" + serialNumber + '\'' +
+                ", marca='" + marca + '\'' +
+                '}';
+    }
+
     public String getSerialNumber() {
         return serialNumber;
     }
