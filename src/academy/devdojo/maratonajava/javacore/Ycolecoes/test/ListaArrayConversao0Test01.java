@@ -16,17 +16,20 @@ public class ListaArrayConversao0Test01 {
         System.out.println(Arrays.toString(listToArray));
 
         System.out.println("------------");
+        // Array pra lista 1:
 
         Integer [] numerosArray = {1,2,3};
 
         List<Integer> arrayToList = Arrays.asList(numerosArray);
-        arrayToList.set(0,12); // Temos um pequeno problema pois o asList faz um link entre o array e a lista. Assim se alterar a lista, tambem altera o array.
+        arrayToList.set(0,12); // Temos um pequeno problema pois o asList faz um link entre o array e a lista.
+        // Assim se alterar a lista, tambem altera o array.
         System.out.println(Arrays.toString(numerosArray));
         System.out.println(arrayToList);
 
         System.out.println("-------------");
+        // Array pra lista 2:
 
-        List<Integer> arrayToList2 = new ArrayList<>(Arrays.asList(numerosArray));
+        List<Integer> arrayToList2 = new ArrayList<>(Arrays.asList(numerosArray));  //Aqui criamos um ArrayList e por ele, atribuímos o array à ele.
         arrayToList2.add(6);
         System.out.println(Arrays.toString(numerosArray));
         System.out.println(arrayToList2);

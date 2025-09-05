@@ -31,6 +31,6 @@ public class BinarySearchTest02 {
 
         Manga mangaToSearch = new Manga(7L, "Hunter x Hunter", 5.50);
 
-        System.out.println(Collections.binarySearch(mangas, mangaToSearch, mangaByIdComparator));
+        System.out.println(Collections.binarySearch(mangas, mangaToSearch, mangaByIdComparator)); // Se utilizamos uma Comparator como sort, devemos passar ele também.
     }
 }

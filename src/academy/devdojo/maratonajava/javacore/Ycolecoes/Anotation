@@ -1,0 +1,3 @@
+BinarySearch: Basicamente, é uma forma de saber onde o objeto estaria na lista de acordo com o sort (Ordem na lista). Se temos uma lista
+ com 5 objetos ordenador pelos iIDs: 1,2,3,4,5, logo se criarmos o 6 e usarmos o BinarySearch pra saber onde ele estaria, ele falaria que seria
+ na ordem numero 6.
