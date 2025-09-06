@@ -1,3 +1,20 @@
 BinarySearch: Basicamente, é uma forma de saber onde o objeto estaria na lista de acordo com o sort (Ordem na lista). Se temos uma lista
  com 5 objetos ordenador pelos iIDs: 1,2,3,4,5, logo se criarmos o 6 e usarmos o BinarySearch pra saber onde ele estaria, ele falaria que seria
  na ordem numero 6.
+
+Equals: Uma caracteristica personalizavel por nós para as classes para que seus objetos possam ser comparados e únicos. É indispensável criar
+ o equals e o hashCode quando formos trabalhar com collections.
+
+HashCode: Um código que é dado para cada objeto. Também é personalizável por nós para que cada obeto criado tenha seu hashCode e seja único.
+
+List: Uma interface que possui listas. Se tem o ArrayList por exemplo, que é um array onde possui vantagens. Não precisamos predefinir um tamanho
+ para o ArrayList, é um array que cresce dinamicamente. Podemos ordenar de forma personalizada a ordem dos objetos da lista, usar o contais...
+ Podemos usar também o LinkedList, que é uma Lista onde cada posição sabe sobre a posição anterior e a posterior. No caso de remoção de obetos
+ da lista, é mais vantajoso.
+
+Set: Uma interface que nos permite trabalhar com HashSet por exemplo. Como se fosse uma lista que armazena cada objeto de forma única.
+ A vantagem do HashSet é que ela não permite objetos repetidos, fazendo essa distinção e organizaçao por meio do Hash de cada objeto.
+ Tem também o LinkedHashSet, que não permite objetos repetidos mas mantém a ordem dos objetos na lista de acordo com que foi inserido por nós
+
+
+

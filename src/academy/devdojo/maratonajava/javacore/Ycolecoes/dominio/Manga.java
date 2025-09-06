@@ -25,12 +25,12 @@ public class Manga implements Comparable<Manga>{ // Comparable torna possível o
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Manga manga = (Manga) o;
-        return id == manga.id && Double.compare(preco, manga.preco) == 0 && Objects.equals(nome, manga.nome);
+        return Objects.equals(id, manga.id) && Objects.equals(nome, manga.nome);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome, preco);
+        return Objects.hash(id, nome);
     }
 
     @Override
