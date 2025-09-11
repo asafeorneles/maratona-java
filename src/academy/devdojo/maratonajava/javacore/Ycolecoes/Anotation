@@ -14,7 +14,7 @@ List: Uma interface que possui listas. Se tem o ArrayList por exemplo, que é um
 
 Set: Uma interface que nos permite trabalhar com HashSet por exemplo. Como se fosse uma lista que armazena cada objeto de forma única.
  A vantagem do HashSet é que ela não permite objetos repetidos, fazendo essa distinção e organizaçao por meio do Hash de cada objeto.
- Tem também o LinkedHashSet, que não permite objetos repetidos mas mantém a ordem dos objetos na lista de acordo com que foi inserido por nós
+ Tem também o LinkedHashSet, que não permite objetos repetidos mas mantém a ordem dos objetos na lista de acordo com a ordem que foi inserido por nós
 
 NavigableSet: Uma interface que extende o Set e tem como característica trabalhar com Classes contable. Ela nos permite trabalhar por exemplo com o TreeSet.
  TreeSet: O TreeSet permanece com as características do Set(Evitar objetos repetidos na lista) mas agora ela ordena os objetos na listas de acordo com
