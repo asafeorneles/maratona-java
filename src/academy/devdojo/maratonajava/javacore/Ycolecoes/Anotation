@@ -20,7 +20,14 @@ NavigableSet: Uma interface que extende o Set e tem como característica trabalh
  TreeSet: O TreeSet permanece com as características do Set(Evitar objetos repetidos na lista) mas agora ela ordena os objetos na listas de acordo com
   o que adotamos para ser comparado no comparable ou no comparator. Ou seja, ela nescessita que a classe tenha uma forma de ordenar sendo comparable ou comparator.
 
-Map: Map é basicamente uma Collection. Ele trabalha com chaves e valores. Cada chave possui um valor e nós podemos definir o tipo da chave e valor.
+Map: Map é quase uma Collection. Ele trabalha com chaves e valores. Cada chave possui um valor e nós podemos definir o tipo da chave e valor.
  HashSet: Um map. Ele não permite que se tenha 2 chaves iguais. Podemos ter vários valores iguais para diferentes chaves mas apenas uma chave para cada valor.
   Se adicionarmos 2 chaves iguais com valores diferentes, o HashMap sobrescreve o valor.
   Em vêz de adicionarmos com .add, adicionamos com .put.
+
+Queue: Fila. É uma interface que permite trabalhar com fila. FIFO (First in, first out). Ela tem suas coleçoes:
+ PriorityQueue: Coleçao da queue. O interessante é que a priorityQueue nao trabalha como FIFO. Ela Permite adicionar e remover objetos de acordo
+  com sua forma de ordenaçao, ou seja, o objeto tem que ser comparable ou ter um comparator. Ela não ordena os objetos quando estão em memória
+  Mas sim quando damos uma ordem como remove, etc.
+ Se usarmos a Queue como um LinkedList, aí sim teremos uma fila usando a FIFO. Exemplo: Queue<Paciente> filaNormal = new LinkedList<>();
+ Aqui, ao removermos os pacientes, a fila irá remover por ordem de chegada.
