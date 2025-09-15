@@ -1,0 +1,32 @@
+Generics: É uma forma de especificar o tipo da lista mas sem quebrar o código e os sistemas que utilizam java. Antigamente as listas eram assim:
+List lista = new ArrayList<>();
+Isso era um problema pois não validava os objetos que eram inseridos, isso teria que ser feito a mão.
+
+O generics força em tempo de compilação. Usando <String> por exemplo, na hora de compilar, a lista força o tipo do objeto
+
+Quando você escreve isso:
+
+List<String> nomes = new ArrayList<>();
+nomes.add("Ana");
+nomes.add(123); // ❌
+
+
+Na compilação o javac olha o código e fala:
+
+“Ei! Essa lista só aceita String, você tá tentando colocar um Integer. Isso não compila.”
+
+➡️ Então o erro é detectado antes de rodar o programa.
+
+Sem Generics, seria assim:
+
+List nomes = new ArrayList();
+nomes.add("Ana");
+nomes.add(123); // Aceita
+
+
+Aqui compila tranquilo. Mas quando você faz:
+
+String nome = (String) nomes.get(1); // ❌ ClassCastException em tempo de execução
+
+
+O programa quebra só depois que você roda.
