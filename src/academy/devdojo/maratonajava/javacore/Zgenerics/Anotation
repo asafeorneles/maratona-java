@@ -1,32 +1,46 @@
 Generics: É uma forma de especificar o tipo da lista mas sem quebrar o código e os sistemas que utilizam java. Antigamente as listas eram assim:
-List lista = new ArrayList<>();
-Isso era um problema pois não validava os objetos que eram inseridos, isso teria que ser feito a mão.
+    List lista = new ArrayList<>();
+    Isso era um problema pois não validava os objetos que eram inseridos, isso teria que ser feito a mão.
 
-O generics força em tempo de compilação. Usando <String> por exemplo, na hora de compilar, a lista força o tipo do objeto
+    O generics força em tempo de compilação. Usando <String> por exemplo, na hora de compilar, a lista força o tipo do objeto
 
-Quando você escreve isso:
+    Quando você escreve isso:
 
-List<String> nomes = new ArrayList<>();
-nomes.add("Ana");
-nomes.add(123); // ❌
+    List<String> nomes = new ArrayList<>();
+    nomes.add("Ana");
+    nomes.add(123); // ❌
 
+    Na compilação o javac olha o código e fala:
 
-Na compilação o javac olha o código e fala:
+    “Ei! Essa lista só aceita String, você tá tentando colocar um Integer. Isso não compila.”
 
-“Ei! Essa lista só aceita String, você tá tentando colocar um Integer. Isso não compila.”
+    ➡️ Então o erro é detectado antes de rodar o programa.
 
-➡️ Então o erro é detectado antes de rodar o programa.
+    Sem Generics, seria assim:
 
-Sem Generics, seria assim:
+    List nomes = new ArrayList();
+    nomes.add("Ana");
+    nomes.add(123); // Aceita
 
-List nomes = new ArrayList();
-nomes.add("Ana");
-nomes.add(123); // Aceita
+    Aqui compila tranquilo. Mas quando você faz:
 
+    String nome = (String) nomes.get(1); // ❌ ClassCastException em tempo de execução
 
-Aqui compila tranquilo. Mas quando você faz:
+    O programa quebra só depois que você roda.
 
-String nome = (String) nomes.get(1); // ❌ ClassCastException em tempo de execução
+    List<Cachorro> cachorros = new ArrayList<>(); -> compilaçao
+    List cachorros = new ArrayList<>(); -> execução
+    O Type Erasure apaga os generics na hora de executar
 
+WildCard:
+ Diferente dos arrays, as lits em Java, não reconhecem o polimorfismo. Em um array, podemos ter métodos que aceitam um Array de Animai.
+  Se passarmos nesse método uma array de subclasse de Animal, por exemplo um array de Cachorro, ele vai aceitar. Agora em List, não.
+  Isso acontece pois em List, não há polimorfismo, para List, List<Cachorro> =~ List<Animal>, embora Cachorro É UM Animal.
+  Então, usamos o WildCard, que é um ponto de interrogação: List <? extends Animal>.
+ Pontos importantes: Temos 2 formas de usa-los em métodos:
+  List <? extends Animal> animais: Aceita qualquer List Animal e qualquer List que seja Subclasse. Ao usar desta forma, não podemos adicionar objetos na lista,
+   ela se torna apenas para leitura, pois tem a possibilidade de passarmos uma lista de cachorro e querermos add um gato na lista, por exemplo.
+   Para resolver isso, temos outra forma.
+  List <? super Animal> animais: Aceita qualquer List Animal e qualquer List que seja Superclasse, nesse caso, Object.
+   Como temos garantia de que tudo que for passado vai ser um Animal, podemos adicionar gato e cachorro, pois temos certeza de que são Animal.
 
-O programa quebra só depois que você roda.
