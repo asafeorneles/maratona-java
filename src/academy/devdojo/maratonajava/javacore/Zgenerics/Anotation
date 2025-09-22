@@ -33,14 +33,22 @@ Generics: É uma forma de especificar o tipo da lista mas sem quebrar o código 
     O Type Erasure apaga os generics na hora de executar
 
 WildCard:
- Diferente dos arrays, as lits em Java, não reconhecem o polimorfismo. Em um array, podemos ter métodos que aceitam um Array de Animai.
+ * Diferente dos arrays, as lits em Java, não reconhecem o polimorfismo. Em um array, podemos ter métodos que aceitam um Array de Animai.
   Se passarmos nesse método uma array de subclasse de Animal, por exemplo um array de Cachorro, ele vai aceitar. Agora em List, não.
   Isso acontece pois em List, não há polimorfismo, para List, List<Cachorro> =~ List<Animal>, embora Cachorro É UM Animal.
   Então, usamos o WildCard, que é um ponto de interrogação: List <? extends Animal>.
- Pontos importantes: Temos 2 formas de usa-los em métodos:
+ * Pontos importantes: Temos 2 formas de usa-los em métodos:
   List <? extends Animal> animais: Aceita qualquer List Animal e qualquer List que seja Subclasse. Ao usar desta forma, não podemos adicionar objetos na lista,
    ela se torna apenas para leitura, pois tem a possibilidade de passarmos uma lista de cachorro e querermos add um gato na lista, por exemplo.
    Para resolver isso, temos outra forma.
   List <? super Animal> animais: Aceita qualquer List Animal e qualquer List que seja Superclasse, nesse caso, Object.
    Como temos garantia de que tudo que for passado vai ser um Animal, podemos adicionar gato e cachorro, pois temos certeza de que são Animal.
 
+Classes Genéricas:
+ * Classes genéricas são classes que permitem resolver situaçoes que compartilham o mesmo problema. Adicionando o generics <T> na frente da classe.
+  ela se torna uma classe literalmente genérica, podendo servir pra determinadas outras classes que vão nescessitar do mesmo código, ou seja, o código da
+  classe genérica se torna reutilizável por outras.
+
+Métodos Genéricos:
+ * Não difere muito de classes genéricas. Basicamente métodos que podem ser reutilizáveis. Ele consegue suprir diferentes tipos de objetos usando um método
+  apenas. Isso ajuda a reutilizar código.
