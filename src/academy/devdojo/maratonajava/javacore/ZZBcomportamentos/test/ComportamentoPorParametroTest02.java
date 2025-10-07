@@ -22,7 +22,7 @@ public class ComportamentoPorParametroTest02 {
 //            }
 //        });
 
-        // Forma muito mais simples sem ter que sobrescrever a interface, usando lambda expression (O codigo nao quebra pois o lambda expression é compatível com o CarPredicate)
+        // Forma muito mais simples sem ter que criar um nova interface anônima, apenas usando lambda expression (O codigo nao quebra pois o lambda expression é compatível com o CarPredicate)
         List<Car> redCars = filterCars(cars, car -> car.getColor().equalsIgnoreCase("red"));
         System.out.println(redCars);
     }

@@ -1,0 +1,39 @@
+Não é só o Comparator<> Que é possível de se usar criando uma classe concreta. Podemos fazer isso com outras interfaces funcionais, por exemplo:
+
+👇 Exemplo completo com Predicate (String de tamanho 5)
+1. Classe concreta
+class PredicatePorTamanhoString implements Predicate<String> {
+    @Override
+    public boolean test(String s) {
+        return s.length() == 5;
+    }
+}
+
+
+Uso:
+
+PredicatePorTamanhoString predicate = new PredicatePorTamanhoString();
+System.out.println(filtrar(names, predicate));
+
+2. Classe anônima
+System.out.println(filtrar(names, new Predicate<String>() {
+    @Override
+    public boolean test(String s) {
+        return s.length() == 5;
+    }
+}));
+
+3. Lambda
+System.out.println(filtrar(names, s -> s.length() == 5));
+
+⚡ Generalizando
+
+Você pode fazer isso com qualquer uma das interfaces de java.util.function:
+
+Consumer → classe concreta que imprime um valor, ou System.out::println como lambda.
+
+Function → classe concreta que transforma algo, ou (x -> x.toUpperCase()) como lambda.
+
+Supplier → classe concreta que retorna um valor, ou () -> "Hello" como lambda.
+
+Runnable → classe concreta com run(), ou () -> System.out.println("rodando").

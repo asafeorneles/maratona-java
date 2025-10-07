@@ -1,15 +1,36 @@
-Lambdas:
- Requer uma interface funcional para existir. Uma interface funcional é uma interface que possui apenas um método qque vai ditar como a lâmbida vai funcionar.
-  Podem existir outros métodos mas eles tem que ser default.
- As lambdas são Anonimas, Funções pois não estão atreladas a nenhuma classe e Concisa (O objetivo é tornar o código mais conciso)
- Estrutura:
-  (Parâmetro) -> <expressão> //ex: (Car car) -> car.getYear() < 2016
+     Lambdas:
+  É uma forma mais enxuta de escrever código quando vamos utilizar uma interface funcional, em vez de criar a interface de forma anônima ou por uma classe concreta.
+    Deixa o código mais limpo, e pode ser combinada com métodos, classes anônimas para otimizar códigos e deixa-los mais robustos.
+    Requer uma interface funcional para existir. Uma interface funcional é uma interface que possui apenas um método que vai ditar como a lâmbida vai funcionar.
+     Podem existir outros métodos mas eles tem que ser default.
+  As lambdas são Anonimas, Funções pois não estão atreladas a nenhuma classe e Concisa (O objetivo é tornar o código mais conciso)
+  Estrutura:
+    (Parâmetro) -> <expressão> //ex: (Car car) -> car.getYear() < 2016
 
-Algumas interfaces funcionais para usar a Lambda:
- Predicate:
-  Ele testa o elemento e retorna um boolean. Ex: Queremos validar uma condição em uma lista de roupas, se as roupas são pretas por exemplo (Usaríamos o if).
- Consumer:
-  Ele é usado quando não precisamos de retornar nada, apenas definir uma logica sem retorno. Ex: Impressoes. Imprimir uam lista.
- Function:
-  Ela é usada quando queremos passar um tipo e retornar algo. O tipo do que vai ser retornado pode ser diferente. Ex: Passar uma lista e retornar outra lista de nomes
-  contendo o tamanho das palavras, ou seja transforma dados.
+  Algumas interfaces funcionais para usar a Lambda:
+    Predicate:
+      Ele testa o elemento e retorna um boolean. Ex: Queremos validar uma condição em uma lista de roupas, se as roupas são pretas por exemplo (Usaríamos o if).
+    Consumer:
+      Ele é usado quando não precisamos de retornar nada, apenas definir uma logica sem retorno. Ex: Impressoes. Imprimir uam lista.
+    Function:
+      Ela é usada quando queremos passar um tipo e retornar algo. O tipo do que vai ser retornado pode ser diferente. Ex: Passar uma lista e retornar outra lista de nomes
+        contendo o tamanho das palavras, ou seja transforma dados.
+
+
+     Method Reference:
+  É uma forma mais enxuta ainda de se escrever códigos. Em vez de usar lambda, podemos usar Method Reference.
+  Condiçoes: O Method Reference, funciona apenas quando se chama um método, por exemplo:
+    - animes.sort((a1, a2) -> a1.getTitle().compareTo(a2.getTitle())); // -> chama 2 métodos que definem a lógica, o getTitle() e o compareTo().
+    Para simplificar, podemos criar um método apenas ue faz as funções getTitle() e compareTo().
+    Assim, chamamos esse método usando MR, Exemplo: animes.sort(AnimeComparator::comparatorByTitle); // comparatorByTitle é o método estático que contém a lógica de comparar o anime por título.
+  Em métodos não estáticos, devemos criar um objeto da Classe de que o método pertence, e através dele, chamar o método por MR.
+    Exemplo:
+    AnimeComparator animeComparator = new AnimeComparator();
+    animes.sort(animeComparator::comparatorByEpisodesNonStatic);
+  Podemos também utilizar em Classes que implementam métodos, como String, Integer, List...
+  E também podemos utilizar para criar novos objetos, passando os atributos para criar.
+    BiFunction<String, Integer, Anime> newAnime = Anime::new;
+    newAnime.apply("Attack on Titan", 146);
+
+
+
