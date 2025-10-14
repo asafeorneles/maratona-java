@@ -1,0 +1,53 @@
+Porque o ifPresents requer um consumer?
+
+EXEMPLO:
+
+Procure o mangá por título, se existir atualize o título do mangá.
+
+Procure por id, se nao existir, lança excessão
+
+Procure por título, caso nao exista, crie um novo mangá
+
+MÉTODOS DO OPTIONAL<T>;
+
+Método usado	            Tipo de retorno	       Explicação
+.ifPresent(Consumer)	    void	               Executa ação se existir valor, mas não devolve nada
+.map(Function)	            Optional<R>	           Transforma o valor dentro do Optional
+.flatMap(Function)	        Optional<R>	           Mesma ideia, mas evita Optional aninhado
+.orElse(T)	                T	                   Extrai o valor ou devolve um valor padrão
+.orElseGet(Supplier)	    T	                   Extrai ou gera um novo valor sob demanda
+.orElseThrow(Supplier)	    T	                   Extrai ou lança exceção se vazio
+.get()	                    T	                   Extrai o valor (lança exceção se vazio — menos seguro)
+
+DIFERENÇA DO MAP E DO FLATMAP DO OPTIONAL
+
+⚠️ Caso 1 – Usando .map()
+Optional<String> city = optUser
+        .map(user -> user.getAddress().getCity());
+
+💥 Aqui acontece o seguinte:
+O optUser contém um User, então o map() executa a função.
+Dentro da função, user.getAddress() retorna null.
+O Java tenta fazer null.getCity() → NullPointerException antes mesmo do .orElse().
+🧨 Ou seja, map() não protege de null dentro da função.
+
+✅ Caso 2 – Usando .flatMap()
+Agora veja com segurança:
+
+Optional<String> city = optUser
+        .flatMap(user -> Optional.ofNullable(user.getAddress())) // <- protege aqui!
+        .map(Address::getCity);
+
+✨ Aqui o que acontece:
+O optUser contém um User.
+O flatMap executa user -> Optional.ofNullable(user.getAddress()).
+Se getAddress() for null, vira Optional.empty().
+Se tiver endereço, vira Optional<Address> com o valor.
+O flatMap “achata” isso, ou seja, o resultado é:
+
+Optional<Address> se existir, ou
+Optional.empty() se não existir.
+
+Depois o .map(Address::getCity) só roda se o Optional não estiver vazio.
+E se tudo estiver vazio, você pode fechar com:
+city.orElse("Sem cidade cadastrada");
