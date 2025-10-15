@@ -1,0 +1,73 @@
+Primeiro: o que temos
+List<List<String>> cruzeiro = new ArrayList<>();
+
+List<String> atacantes = List.of("Kaio Jorge", "Arroyo", "Gabigol");
+List<String> volantes = List.of("Lucas Silva", "Lucas Romero", "Christian");
+List<String> defensores = List.of("Villalba", "Fabrício Bruno", "Cássio");
+
+cruzeiro.add(atacantes);
+cruzeiro.add(volantes);
+cruzeiro.add(defensores);
+
+
+📦 cruzeiro é uma lista de listas — ou seja:
+
+[
+  [Kaio Jorge, Arroyo, Gabigol],
+  [Lucas Silva, Lucas Romero, Christian],
+  [Villalba, Fabrício Bruno, Cássio]
+]
+
+🧩 Quando usas .map(List::stream)
+cruzeiro.stream()
+        .map(List::stream)
+        .forEach(System.out::println);
+
+
+👉 cruzeiro.stream() cria um Stream<List<String>>
+
+Depois, o .map(List::stream) transforma cada List<String> em um Stream<String>.
+Logo o tipo final é:
+
+Stream<Stream<String>>
+
+
+📦📦 Um stream de streams.
+Cada elemento impresso será algo como:
+
+java.util.stream.ReferencePipeline$Head@6f496d9f
+java.util.stream.ReferencePipeline$Head@723279cf
+java.util.stream.ReferencePipeline$Head@10f87f48
+
+
+Esses são os “endereços” dos Streams internos, e não os nomes.
+
+🌀 Agora com .flatMap(List::stream)
+cruzeiro.stream()
+        .flatMap(List::stream)
+        .forEach(System.out::println);
+
+
+Aqui o que acontece é o seguinte:
+
+O flatMap vê que cada elemento (List<String>) vira um Stream<String>
+
+E então ele “achata” todos esses streams em um só
+→ Ou seja, junta tudo num único fluxo de Strings.
+
+O tipo final é:
+
+Stream<String>
+
+
+E o resultado no console será:
+
+Kaio Jorge
+Arroyo
+Gabigol
+Lucas Silva
+Lucas Romero
+Christian
+Villalba
+Fabrício Bruno
+Cássio
