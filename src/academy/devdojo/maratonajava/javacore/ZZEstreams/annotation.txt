@@ -1,0 +1,2 @@
+Collection: Trabalha com sequência de elementos no espaço (Trabalha com dados na memória)
+Streams: Trabalha com sequência de elementos no tempo (Trabalha com dados em uma sequência de tempo, sem guarda-los)
