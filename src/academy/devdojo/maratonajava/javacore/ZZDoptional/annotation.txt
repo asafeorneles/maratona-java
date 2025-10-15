@@ -1,11 +1,10 @@
-Porque o ifPresents requer um consumer?
+     Optional:
+  Optional é uma interface que tem como objetivo evitar o NullPointException, pois com ele e seus métodos, é possível tratar o que faremos caso o elemento seja null, caso nao seja podemos
+    implementar uma lógica também.
 
-EXEMPLO:
-
+EXERCICIO:
 Procure o mangá por título, se existir atualize o título do mangá.
-
 Procure por id, se nao existir, lança excessão
-
 Procure por título, caso nao exista, crie um novo mangá
 
 MÉTODOS DO OPTIONAL<T>;
