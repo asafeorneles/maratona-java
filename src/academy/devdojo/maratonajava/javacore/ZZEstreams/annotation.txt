@@ -1,2 +1,6 @@
 Collection: Trabalha com sequência de elementos no espaço (Trabalha com dados na memória)
 Streams: Trabalha com sequência de elementos no tempo (Trabalha com dados em uma sequência de tempo, sem guarda-los)
+
+     Streams:
+  Streams podem retornar ou um stream() que nos permite continuar trabalhando com interações, ou pode retornar um valor final, onde nao é possível continuar com as interações, apenas trabalhar
+    com o valor retornado;
