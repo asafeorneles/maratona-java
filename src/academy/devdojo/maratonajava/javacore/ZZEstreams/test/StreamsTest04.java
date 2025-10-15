@@ -40,8 +40,7 @@ public class StreamsTest04 {
 
         cruzeiro.stream() // O cruzeiro.stream() cria um Stream<List<String>>
                 .flatMap(List::stream) // O List::stream fala: Para cada lista (por exemplo, atacantes, volantes, defensores), crie um Stream<String> com os elementos dessa lista. Isso permite que a gente trabalhe com os Elementos da Lista, as Strings.
-                // Entao, temos: Stream<Stream<String>>
-                // O flatMap vê que cada elemento (List<String>) vira um Stream<String> e que está dentro de outro Stream<>, então ele achata, desembrulha esse Stream, retornando apenas Stream<String>
+                // O flatMap junta (achata) todos esses streams em um só: Stream<String> para nao ter Stream<Stream<Strings>>
                 .forEach(System.out::println); // Com o Stream<String>, podemos trabalhar diretamente com as Strings, neste caso, printamos.
     }
 
