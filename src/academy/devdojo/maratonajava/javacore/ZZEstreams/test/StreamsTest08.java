@@ -24,7 +24,7 @@ public class StreamsTest08 {
         lightNovels.stream()
                 .map(LightNovel::getPrice)
                 .filter(price -> price > 3)
-                .reduce((x,y) -> x+y)
+                .reduce(Double::sum)
                 .ifPresent(System.out::println);
 
         // Em sistemas de alta performance, não é tão interessante ficar fazendo essa troca de tipo primitivo para Wrapper. Então, podemos usar o stream do próprio Double, int, long...
