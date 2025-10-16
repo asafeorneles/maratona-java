@@ -4,7 +4,7 @@ package academy.devdojo.maratonajava.javacore.ZZEstreams.test;
 import java.util.List;
 import java.util.Optional;
 
-//Reduce
+//Reduce 1 -> Serve para realizar operações
 public class StreamsTest07 {
     public static void main(String[] args) {
         List<Integer> integers = List.of(1, 2, 3, 4, 5, 6);
