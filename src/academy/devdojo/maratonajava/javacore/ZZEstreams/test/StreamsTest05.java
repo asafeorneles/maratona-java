@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+//FlatMap2
 public class StreamsTest05 {
     public static void main(String[] args) {
         List<String> words = List.of("Gomu", "Gomu", "No", "Mi");

@@ -5,6 +5,7 @@ import academy.devdojo.maratonajava.javacore.ZZEstreams.dominio.LightNovel;
 import java.util.ArrayList;
 import java.util.List;
 
+// FlatMap 1
 public class StreamsTest04 {
     public static List<LightNovel> lightNovels = new ArrayList<>(List.of(
             new LightNovel("Tensei Shittara", 8.99),
