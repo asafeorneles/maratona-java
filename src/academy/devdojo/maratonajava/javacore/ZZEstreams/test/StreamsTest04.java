@@ -3,9 +3,7 @@ package academy.devdojo.maratonajava.javacore.ZZEstreams.test;
 import academy.devdojo.maratonajava.javacore.ZZEstreams.dominio.LightNovel;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class StreamsTest04 {
     public static List<LightNovel> lightNovels = new ArrayList<>(List.of(

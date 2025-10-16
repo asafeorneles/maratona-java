@@ -1,7 +1,6 @@
 package academy.devdojo.maratonajava.javacore.ZZEstreams.test;
 
 import academy.devdojo.maratonajava.javacore.ZZEstreams.dominio.LightNovel;
-import org.w3c.dom.ls.LSOutput;
 
 import java.util.ArrayList;
 import java.util.Comparator;
