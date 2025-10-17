@@ -8,7 +8,7 @@ import java.util.DoubleSummaryStatistics;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// Collectors -> Summarizing
+// Collectors -> Summarizing and Joining
 public class StreamsTest11 {
     public static List<LightNovel> lightNovels = new ArrayList<>(List.of(
             new LightNovel("Tensei Shittara", 10.99),
