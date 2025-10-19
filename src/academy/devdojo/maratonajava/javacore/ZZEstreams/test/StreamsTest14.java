@@ -4,14 +4,12 @@ import academy.devdojo.maratonajava.javacore.ZZEstreams.dominio.Category;
 import academy.devdojo.maratonajava.javacore.ZZEstreams.dominio.LightNovel;
 import academy.devdojo.maratonajava.javacore.ZZEstreams.dominio.Promotion;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-// Collectors -> Agrupamentos de agrupamentos
-public class StreamsTest13 {
+// Collectors -> Funções com Agrupamentos
+public class StreamsTest14 {
     public static List<LightNovel> lightNovels = new ArrayList<>(List.of(
             new LightNovel("Tensei Shittara", 10.99, Category.FANTASY),
             new LightNovel("Overlord", 3.99, Category.FANTASY),
@@ -23,19 +21,19 @@ public class StreamsTest13 {
             new LightNovel("Monogatari", 4.00, Category.ROMANCE)
     ));
     public static void main(String[] args) {
-        // Fazer agrupamento do tipo de preço dos LightNovel sem associar o atributo a eles:
-        // if LightNovel.getPrice() < 6 = UNDER_PROMOTION. else = NORMAL_PRICE.
-
-        Map<Promotion, List<LightNovel>> collect1 = lightNovels.stream()
-                .collect(Collectors.groupingBy(ln -> ln.getPrice() < 6 ? Promotion.UNDER_PROMOTION : Promotion.NORMAL_PRICE));
+        // A quantidade de cada elemento por categoria -> Collectors.counting()
+        Map<Category, Long> collect1 = lightNovels.stream()
+                .collect(Collectors.groupingBy(LightNovel::getCategory, Collectors.counting()));
         System.out.println(collect1);
 
-        // Agrupamento de outros agrupamentos:
-        // Map <Categoria, Map<Promotion, List<LightNovel>>>\
-
-        // É só passar 2 groupingBy dentro do collect()
-        Map<Category, Map<Promotion, List<LightNovel>>> collect2 = lightNovels.stream()
-                .collect(Collectors.groupingBy(LightNovel::getCategory, Collectors.groupingBy(ln -> ln.getPrice() < 6 ? Promotion.UNDER_PROMOTION : Promotion.NORMAL_PRICE)));
+        // O maior/menor elemento de cada categoria:
+        Map<Category, Optional<LightNovel>> collect2 = lightNovels.stream()
+                .collect(Collectors.groupingBy(LightNovel::getCategory, Collectors.maxBy(Comparator.comparing(LightNovel::getPrice))));
         System.out.println(collect2);
+
+        // Por retornar um Map<Category, Optional<LightNovel>>, temos que tirar esse optional da seguinte forma:
+        Map<Category, LightNovel> collect3 = lightNovels.stream()
+                .collect(Collectors.groupingBy(LightNovel::getCategory, Collectors.collectingAndThen(Collectors.maxBy(Comparator.comparing(LightNovel::getPrice)), Optional::get)));
+        System.out.println(collect3);
     }
 }
