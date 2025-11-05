@@ -50,4 +50,12 @@ public class Person {
             return new Person(firstName, lastName, username, emailAddress);
         }
     }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
 }

@@ -18,4 +18,12 @@ public final class Aircraft {
     public boolean bookSeat(String seat){
         return availableSeats.remove(seat);
     }
+
+    @Override
+    public String toString() {
+        return "Aircraft{" +
+                "availableSeats=" + availableSeats +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
