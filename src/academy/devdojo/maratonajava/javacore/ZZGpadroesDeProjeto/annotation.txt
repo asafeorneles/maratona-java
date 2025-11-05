@@ -1,0 +1,18 @@
+  BUILDER
+    Esse padrão de projeto permite facilitar a visualização da criação do objeto, criando métodos para o preenchimento de cada atributo.
+
+  FACTORY:
+    Este padrão de projeto permite desacoplar a lógica de négocio da criação de objetos. Ela é vantajosa pois isola a lógica permitindo
+      que o códigos cliente fiquem mais limpos e dinâmicos, pois se algo for alterado na lógica de criação do objeto, só é feita a alteração
+      em um arquivo e não em mais.
+    Benefícios do uso da FACTORY:
+    | Benefício              | Descrição                                                         |
+    | ---------------------- | ----------------------------------------------------------------- |
+    | **Desacoplamento**     | Código cliente não conhece as classes concretas.                  |
+    | **Organização**        | Centraliza a criação de objetos num único ponto.                  |
+    | **Manutenção fácil**   | Mudanças na lógica de criação não afetam o restante do código.    |
+    | **Extensível**         | Novos tipos podem ser adicionados sem quebrar o código existente. |
+    | **Maior reutilização** | A fábrica pode ser usada por várias partes do sistema.            |
+
+   SINGLETON
+     Comentário do YouTube: O singleton serve para vc alterar um atributo de um classe, em vários locais do projeto, sem o risco de vc acabar criando um novo objeto.
