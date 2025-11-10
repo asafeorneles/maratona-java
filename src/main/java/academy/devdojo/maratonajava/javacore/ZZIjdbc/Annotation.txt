@@ -1,0 +1,9 @@
+  Lombok:
+    Lombok é uma dependência utilizada para economizar linhas de código durante a produção.
+      Possui funcionalidades como @Builder, @Value que na hora de compilar, fornece características para a classe como
+      ter um builder e a classe ser final.
+
+  Log4j2:
+    É uma dependência que torna possível utilizar logs para obter informações e status durante a produção por exemplo.
+      Substitui o System.Out.Println, que possui um pessimo desempenho e não permite personalizarmos as mensagens de retorno
+    Ele requer um arqqquivo de configuração, um xlm que está na pasta resources
