@@ -4,10 +4,7 @@ import academy.devdojo.maratonajava.javacore.ZZIjdbc.conn.ConnectionFactory;
 import academy.devdojo.maratonajava.javacore.ZZIjdbc.dominio.Producer;
 import lombok.extern.log4j.Log4j2;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +21,7 @@ public class ProducerRepository {
         }
 
     }
-      // Podemos passar o sql sem o uso de aspas
+    // Podemos passar o sql sem o uso de aspas
 //    public static void save(Producer producer) {
 //        String sql = "INSERT INTO anime_store.producer (name) VALUES ('%s');".formatted(producer.getName());
 //        try (Connection conn = ConnectionFactory.getConnection();
@@ -68,7 +65,7 @@ public class ProducerRepository {
         try (Connection conn = ConnectionFactory.getConnection();
              Statement stmt = conn.createStatement()) {
             ResultSet resultSet = stmt.executeQuery(sql);
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 Producer produce = Producer.builder()
                         .id(resultSet.getInt("id"))
                         .name(resultSet.getString("name"))
@@ -86,9 +83,9 @@ public class ProducerRepository {
         String sql = "SELECT * FROM anime_store.producer WHERE name LIKE '%%%s%%'".formatted(name);
         List<Producer> producers = new ArrayList<>();
         try (Connection conn = ConnectionFactory.getConnection();
-        Statement stmt = conn.createStatement()){
+             Statement stmt = conn.createStatement()) {
             ResultSet resultSet = stmt.executeQuery(sql);
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 Producer producerFound = Producer.builder()
                         .id(resultSet.getInt("id"))
                         .name(resultSet.getString("name"))
@@ -101,8 +98,31 @@ public class ProducerRepository {
         return producers;
     }
 
-    public static List<Producer> findAll2(){
-        log.info("Finding all Producers in the database.");
+    public static List<Producer> findAll2() {
+        log.info("Finding all Producers in the database...");
         return findByName("");
+    }
+
+    public static void showProducerMetadata() {
+        log.info("Showing producer Metadata...");
+        String sql = "SELECT * FROM anime_store.producer";
+        try (Connection conn = ConnectionFactory.getConnection();
+             Statement stmt = conn.createStatement()) {
+
+            ResultSet resultSet = stmt.executeQuery(sql);
+            ResultSetMetaData rsMetaData = resultSet.getMetaData(); // Através do result set, criamos um ResultSetMetaData
+            int columnCount = rsMetaData.getColumnCount(); // Retorna a quantidade de colunas da tabela
+            resultSet.next(); // Faz referencia pra primeira linha apenas (Se quisermos todas, usamos um while)
+
+            for (int i = 1; i <= columnCount; i++) { // a cada interação de i, ele parte pra próxima coluna
+                log.info("Table name: '{}'", rsMetaData.getTableName(i));
+                log.info("Column name: '{}'", rsMetaData.getColumnName(i));
+                log.info("Column type: '{}'", rsMetaData.getColumnTypeName(i));
+                log.info("Column size: '{}'", rsMetaData.getColumnDisplaySize(i));
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
