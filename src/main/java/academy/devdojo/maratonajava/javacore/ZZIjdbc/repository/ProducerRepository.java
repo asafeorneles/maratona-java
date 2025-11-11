@@ -80,4 +80,29 @@ public class ProducerRepository {
         }
         return producers;
     }
+
+    public static List<Producer> findByName(String name) {
+        log.info("Finding producers by name...");
+        String sql = "SELECT * FROM anime_store.producer WHERE name LIKE '%%%s%%'".formatted(name);
+        List<Producer> producers = new ArrayList<>();
+        try (Connection conn = ConnectionFactory.getConnection();
+        Statement stmt = conn.createStatement()){
+            ResultSet resultSet = stmt.executeQuery(sql);
+            while (resultSet.next()){
+                Producer producerFound = Producer.builder()
+                        .id(resultSet.getInt("id"))
+                        .name(resultSet.getString("name"))
+                        .build();
+                producers.add(producerFound);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return producers;
+    }
+
+    public static List<Producer> findAll2(){
+        log.info("Finding all Producers in the database.");
+        return findByName("");
+    }
 }

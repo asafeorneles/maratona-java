@@ -24,6 +24,14 @@ public class ProducerService {
         return ProducerRepository.findAll();
     }
 
+    public static List<Producer> findByName (String name){
+        return ProducerRepository.findByName(name);
+    }
+
+    public static List<Producer> findAll2 (){
+        return ProducerRepository.findAll2();
+    }
+
     private static void checkId(Integer id){
         if (id == null || id <= 0){
             throw new IllegalArgumentException("Invalid value for id");
