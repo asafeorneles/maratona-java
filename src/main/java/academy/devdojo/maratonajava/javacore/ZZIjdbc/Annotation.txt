@@ -1,3 +1,20 @@
+  java.sql = Connection, Statement, ResultSet, DriveManager
+
+  DriveManager:
+    Cria uma conexão com a url do banco de dados, username e password, ou seja retorna uma Connection
+
+  Connection:
+    Através do DriveManager, criamos uma connection
+
+  Statement:
+    Com uma connection, criamos um Statement que é capaz de fazer operações no banco de dados, como inserir um dado,
+      deletar, atualizar... utilizando o executeUpdate().
+
+  ResultSet:
+    Através de um Statment conseguimos criar um ResultSet, que é capaz de receber valores de consultas de um DB,
+      através do método executeQuery().
+
+
   Lombok:
     Lombok é uma dependência utilizada para economizar linhas de código durante a produção.
       Possui funcionalidades como @Builder, @Value que na hora de compilar, fornece características para a classe como
@@ -6,4 +23,4 @@
   Log4j2:
     É uma dependência que torna possível utilizar logs para obter informações e status durante a produção por exemplo.
       Substitui o System.Out.Println, que possui um pessimo desempenho e não permite personalizarmos as mensagens de retorno
-    Ele requer um arqqquivo de configuração, um xlm que está na pasta resources
+    Ele requer um arquivo de configuração, um xlm que está na pasta resources
