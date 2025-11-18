@@ -63,8 +63,9 @@ public class ProducerRepository {
         String sql = "SELECT * FROM `anime_store`.`producer`";
         List<Producer> producers = new ArrayList<>();
         try (Connection conn = ConnectionFactory.getConnection();
-             Statement stmt = conn.createStatement()) {
-            ResultSet resultSet = stmt.executeQuery(sql);
+             Statement stmt = conn.createStatement();
+             ResultSet resultSet = stmt.executeQuery(sql)) {
+
             while (resultSet.next()) {
                 Producer produce = Producer.builder()
                         .id(resultSet.getInt("id"))
@@ -83,8 +84,8 @@ public class ProducerRepository {
         String sql = "SELECT * FROM anime_store.producer WHERE name LIKE '%%%s%%'".formatted(name);
         List<Producer> producers = new ArrayList<>();
         try (Connection conn = ConnectionFactory.getConnection();
-             Statement stmt = conn.createStatement()) {
-            ResultSet resultSet = stmt.executeQuery(sql);
+             Statement stmt = conn.createStatement();
+             ResultSet resultSet = stmt.executeQuery(sql)) {
             while (resultSet.next()) {
                 Producer producerFound = Producer.builder()
                         .id(resultSet.getInt("id"))
@@ -103,13 +104,13 @@ public class ProducerRepository {
         return findByName("");
     }
 
-    public static void showProducerMetadata() {
+    public static void showProducerMetadata() { // Obter informações dos dados da tabela e suas colunas
         log.info("Showing producer Metadata...");
         String sql = "SELECT * FROM anime_store.producer";
         try (Connection conn = ConnectionFactory.getConnection();
-             Statement stmt = conn.createStatement()) {
-
-            ResultSet resultSet = stmt.executeQuery(sql);
+             Statement stmt = conn.createStatement();
+             ResultSet resultSet = stmt.executeQuery(sql)) {
+            
             ResultSetMetaData rsMetaData = resultSet.getMetaData(); // Através do result set, criamos um ResultSetMetaData
             int columnCount = rsMetaData.getColumnCount(); // Retorna a quantidade de colunas da tabela
             resultSet.next(); // Faz referencia pra primeira linha apenas (Se quisermos todas, usamos um while)
@@ -121,6 +122,86 @@ public class ProducerRepository {
                 log.info("Column size: '{}'", rsMetaData.getColumnDisplaySize(i));
 
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void showDriverMetadata() { // Obter informações sobre o driver do jdbc
+        log.info("Showing driver metadata...");
+        try (Connection conn = ConnectionFactory.getConnection()) {
+
+            DatabaseMetaData dbDetaData = conn.getMetaData();
+
+            if (dbDetaData.supportsResultSetType(ResultSet.TYPE_FORWARD_ONLY)) { // Se o db permite consultar de cima pra baixo
+                log.info("Supports TYPE_FORWARD_ONLY");
+                if (dbDetaData.supportsResultSetConcurrency(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE)) {
+                    log.info("And supports CONCUR_UPDATABLE");
+                }
+            }
+
+            if (dbDetaData.supportsResultSetType(ResultSet.TYPE_SCROLL_INSENSITIVE)) { // Se permite consultar de cima pra baixo, baixo pra cima, mas não altera os dados em tempo real
+                log.info("Supports TYPE_SCROLL_INSENSITIVE");
+                if (dbDetaData.supportsResultSetConcurrency(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+                    log.info("And supports CONCUR_UPDATABLE");
+                }
+            }
+
+            if (dbDetaData.supportsResultSetType(ResultSet.TYPE_SCROLL_SENSITIVE)) { // altera os dados em tempo real
+                log.info("Supports TYPE_SCROLL_SENSITIVE");
+                if (dbDetaData.supportsResultSetConcurrency(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+                    log.info("And supports CONCUR_UPDATABLE");
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void showTypeScrollWorking() {
+        String sql = "SELECT * FROM anime_store.producer;";
+        try (Connection conn = ConnectionFactory.getConnection();
+             Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+             ResultSet resultSet = stmt.executeQuery(sql)) {
+
+            log.info("Last row? '{}'", resultSet.last()); // Pula pra ultima linha
+            log.info("Row number '{}'", resultSet.getRow());
+            log.info(Producer.builder().id(resultSet.getInt("id")).name(resultSet.getString("name")).build());
+            log.info("---------");
+
+            log.info("First row? '{}'", resultSet.first()); //Pula pra primeira linha
+            log.info("Row number '{}'", resultSet.getRow());
+            log.info(Producer.builder().id(resultSet.getInt("id")).name(resultSet.getString("name")).build());
+            log.info("---------");
+
+            log.info("Row absolute? '{}'", resultSet.absolute(2)); //Pula pra linha que definirmos
+            log.info("Row number '{}'", resultSet.getRow());
+            log.info(Producer.builder().id(resultSet.getInt("id")).name(resultSet.getString("name")).build());
+            log.info("---------");
+
+            log.info("Row relative? '{}'", resultSet.relative(-1)); //Volta a quantidade de linhas que quisermos
+            log.info("Row number '{}'", resultSet.getRow());
+            log.info(Producer.builder().id(resultSet.getInt("id")).name(resultSet.getString("name")).build());
+            log.info("---------");
+
+            log.info("Is last? '{}'", resultSet.isLast()); // Só retorna se está na ultima linha (Não modifica o cursor)
+            log.info("Row number '{}'", resultSet.getRow());
+            log.info(Producer.builder().id(resultSet.getInt("id")).name(resultSet.getString("name")).build());
+            log.info("---------");
+
+            log.info("Is first? '{}'", resultSet.isFirst()); // Só retorna se está na primeira linha (Não modifica o cursor)
+            log.info("Row number '{}'", resultSet.getRow());
+            log.info(Producer.builder().id(resultSet.getInt("id")).name(resultSet.getString("name")).build());
+            log.info("---------");
+
+            log.info("Last row? '{}'", resultSet.last());
+            resultSet.next(); // Como fomos pra ultima linha, movemos o cursor mais uma vez para ir pra depois da ultima linha. (Poderíamos usar o afterLast())
+            log.info("Is after last? '{}'", resultSet.isAfterLast());
+            while (resultSet.previous()){
+                log.info(Producer.builder().id(resultSet.getInt("id")).name(resultSet.getString("name")).build());
+            }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
