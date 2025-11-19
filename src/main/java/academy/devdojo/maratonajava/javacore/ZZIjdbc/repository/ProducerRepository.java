@@ -251,7 +251,7 @@ public class ProducerRepository {
              Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
              ResultSet resultSet = stmt.executeQuery(sql)) {
 
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 log.info("Deleting '{}'", resultSet.getString("name"));
                 resultSet.deleteRow();
             }
@@ -271,4 +271,34 @@ public class ProducerRepository {
         resultSet.next();
         return Producer.builder().id(resultSet.getInt("id")).name(resultSet.getString("name")).build();
     }
+
+    public static List<Producer> findByNamePreparedStatement(String name) {
+        log.info("Finding producers by name...");
+        String sql = "SELECT * FROM anime_store.producer WHERE name LIKE ?;";
+        List<Producer> producers = new ArrayList<>();
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement ps = createPreparedStatemant(conn, sql, name);
+             ResultSet resultSet = ps.executeQuery()) {
+
+            while (resultSet.next()) {
+                Producer producerFound = Producer.builder()
+                        .id(resultSet.getInt("id"))
+                        .name(resultSet.getString("name"))
+                        .build();
+                producers.add(producerFound);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return producers;
+    }
+
+    private static PreparedStatement createPreparedStatemant(Connection conn, String sql, String name) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, String.format("%%%s%%", name));
+        return ps;
+    }
+
 }
+
+

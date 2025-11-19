@@ -14,7 +14,6 @@
     Através de um Statment conseguimos criar um ResultSet, que é capaz de receber valores de consultas de um DB,
       através do método executeQuery().
 
-
   Lombok:
     Lombok é uma dependência utilizada para economizar linhas de código durante a produção.
       Possui funcionalidades como @Builder, @Value que na hora de compilar, fornece características para a classe como
