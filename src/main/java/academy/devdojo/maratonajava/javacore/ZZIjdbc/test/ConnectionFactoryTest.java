@@ -12,7 +12,7 @@ import java.util.List;
 public class ConnectionFactoryTest {
     public static void main(String[] args) {
         Producer producer = Producer.builder().name("Studio Deen").build();
-        Producer producerToUpdate = Producer.builder().id(1).name("MADHOUSE").build();
+        Producer producerToUpdate = Producer.builder().id(1).name("madhouse").build();
 
 //        ProducerService.save(producer);
 //        ProducerService.delele(6);
@@ -28,8 +28,10 @@ public class ConnectionFactoryTest {
 //        List<Producer> producers = ProducerService.findByNameAndInserteWhenNotFound("A1-Pictures");
 //        log.info("Producers found: '{}'", producers);
 //        ProducerService.findByNameAndDelete("A1");
-        List<Producer> producers = ProducerService.findByNamePreparedStatement("B");
-        log.info("Producers found: '{}'", producers);
+//        List<Producer> producers = ProducerService.findByNamePreparedStatement("B");
+//        log.info("Producers found: '{}'", producers);
+
+        ProducerService.updatePreparedStatement(producerToUpdate);
 
     }
 

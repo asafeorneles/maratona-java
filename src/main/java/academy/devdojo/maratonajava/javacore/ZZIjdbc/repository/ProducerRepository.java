@@ -274,10 +274,9 @@ public class ProducerRepository {
 
     public static List<Producer> findByNamePreparedStatement(String name) {
         log.info("Finding producers by name...");
-        String sql = "SELECT * FROM anime_store.producer WHERE name LIKE ?;";
         List<Producer> producers = new ArrayList<>();
         try (Connection conn = ConnectionFactory.getConnection();
-             PreparedStatement ps = createPreparedStatemant(conn, sql, name);
+             PreparedStatement ps = preparedStatementFindByName(conn, name);
              ResultSet resultSet = ps.executeQuery()) {
 
             while (resultSet.next()) {
@@ -293,9 +292,29 @@ public class ProducerRepository {
         return producers;
     }
 
-    private static PreparedStatement createPreparedStatemant(Connection conn, String sql, String name) throws SQLException {
+    private static PreparedStatement preparedStatementFindByName(Connection conn, String name) throws SQLException {
+        String sql = "SELECT * FROM anime_store.producer WHERE name LIKE ?;";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, String.format("%%%s%%", name));
+        return ps;
+    }
+
+    public static void updatePreparedStatement(Producer producer) {
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement ps = preparedStatementUpdate(conn, producer)) {
+            int rowsAfeccted = ps.executeUpdate();
+            log.info("Updated producer '{}' in the database. Rows affected '{}'", producer.getId(), rowsAfeccted);
+        } catch (SQLException e) {
+            log.info("Error while trying to update producer '{}'", producer.getId(), e);
+        }
+
+    }
+
+    private static PreparedStatement preparedStatementUpdate (Connection conn, Producer producer) throws SQLException {
+        String sql = "UPDATE `anime_store`.`producer` SET `name` = ? WHERE (`id` = ?);".formatted(producer.getName(), producer.getId());
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, producer.getName());
+        ps.setInt(2, producer.getId());
         return ps;
     }
 
