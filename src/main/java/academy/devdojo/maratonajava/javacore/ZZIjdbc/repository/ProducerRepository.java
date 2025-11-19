@@ -318,6 +318,33 @@ public class ProducerRepository {
         return ps;
     }
 
+    public static List<Producer> findByNameCallableStatement(String name) {
+        log.info("Finding producers by name...");
+        List<Producer> producers = new ArrayList<>();
+        try (Connection conn = ConnectionFactory.getConnection();
+             CallableStatement cs = callableStatementFindByName(conn, name);
+             ResultSet resultSet = cs.executeQuery()) {
+
+            while (resultSet.next()) {
+                Producer producerFound = Producer.builder()
+                        .id(resultSet.getInt("id"))
+                        .name(resultSet.getString("name"))
+                        .build();
+                producers.add(producerFound);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return producers;
+    }
+
+    private static CallableStatement callableStatementFindByName(Connection conn, String name) throws SQLException {
+        String sql = "CALL `anime_store`.`sp_get_producer_by_name`(?);"; // A lógica está dentro do SQL, para isso utilizamos o CallableStatement
+        CallableStatement cs = conn.prepareCall(sql);
+        cs.setString(1, String.format("%%%s%%", name));
+        return cs;
+    }
+
 }
 
 
