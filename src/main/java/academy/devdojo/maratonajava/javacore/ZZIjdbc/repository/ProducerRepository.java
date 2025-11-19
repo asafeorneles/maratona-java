@@ -110,7 +110,7 @@ public class ProducerRepository {
         try (Connection conn = ConnectionFactory.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet resultSet = stmt.executeQuery(sql)) {
-            
+
             ResultSetMetaData rsMetaData = resultSet.getMetaData(); // Através do result set, criamos um ResultSetMetaData
             int columnCount = rsMetaData.getColumnCount(); // Retorna a quantidade de colunas da tabela
             resultSet.next(); // Faz referencia pra primeira linha apenas (Se quisermos todas, usamos um while)
@@ -198,12 +198,77 @@ public class ProducerRepository {
             log.info("Last row? '{}'", resultSet.last());
             resultSet.next(); // Como fomos pra ultima linha, movemos o cursor mais uma vez para ir pra depois da ultima linha. (Poderíamos usar o afterLast())
             log.info("Is after last? '{}'", resultSet.isAfterLast());
-            while (resultSet.previous()){
+            while (resultSet.previous()) {
                 log.info(Producer.builder().id(resultSet.getInt("id")).name(resultSet.getString("name")).build());
             }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static List<Producer> findByNameAndUpdateToUpper(String name) {
+        String sql = "SELECT * FROM anime_store.producer WHERE name LIKE '%%%s%%'".formatted(name);
+        List<Producer> producers = new ArrayList<>();
+        try (Connection conn = ConnectionFactory.getConnection();
+             Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+             ResultSet resultSet = stmt.executeQuery(sql)) {
+            while (resultSet.next()) {
+                resultSet.updateString("name", resultSet.getString("name").toUpperCase());
+                resultSet.updateRow(); // Só vai atualizar de fato o banco de dados se adicionarmos esse metodo
+                Producer producerFound = Producer.builder()
+                        .id(resultSet.getInt("id"))
+                        .name(resultSet.getString("name"))
+                        .build();
+                producers.add(producerFound);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return producers;
+    }
+
+    public static List<Producer> findByNameAndInserteWhenNotFound(String name) {
+        String sql = "SELECT * FROM anime_store.producer WHERE name LIKE '%%%s%%'".formatted(name);
+        List<Producer> producers = new ArrayList<>();
+        try (Connection conn = ConnectionFactory.getConnection();
+             Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+             ResultSet resultSet = stmt.executeQuery(sql)) {
+            if (resultSet.next()) return producers;
+
+            insertNewProducer(name, resultSet);
+
+            producers.add(getProducer(resultSet));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return producers;
+    }
+
+    public static void findByNameAndDelete(String name) {
+        String sql = "SELECT * FROM anime_store.producer WHERE name LIKE '%%%s%%'".formatted(name);
+        try (Connection conn = ConnectionFactory.getConnection();
+             Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+             ResultSet resultSet = stmt.executeQuery(sql)) {
+
+            while (resultSet.next()){
+                log.info("Deleting '{}'", resultSet.getString("name"));
+                resultSet.deleteRow();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void insertNewProducer(String name, ResultSet resultSet) throws SQLException {
+        resultSet.moveToInsertRow(); // Move para a linha vazia da tabela
+        resultSet.updateString("name", name); // "Modifica" esta linha que está vazia
+        resultSet.insertRow(); // Confirma a inserção dessa nova linha
+    }
+
+    private static Producer getProducer(ResultSet resultSet) throws SQLException {
+        resultSet.beforeFirst();
+        resultSet.next();
+        return Producer.builder().id(resultSet.getInt("id")).name(resultSet.getString("name")).build();
     }
 }

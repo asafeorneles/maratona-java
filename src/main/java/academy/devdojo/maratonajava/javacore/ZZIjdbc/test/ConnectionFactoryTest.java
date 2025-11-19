@@ -23,7 +23,14 @@ public class ConnectionFactoryTest {
 //        log.info("Producers found: '{}'", producers);
 //        ProducerService.showProducerMetadata();
 //        ProducerService.showDriverMetadata();
-        ProducerService.showTypeScrollWorking();
+//        ProducerService.showTypeScrollWorking();
+//        List<Producer> producers = ProducerService.findByNameAndUpdateToUpper("deen");
+//        List<Producer> producers = ProducerService.findByNameAndInserteWhenNotFound("A1-Pictures");
+//        log.info("Producers found: '{}'", producers);
+        ProducerService.findByNameAndDelete("A1");
+
+
     }
+
 
 }

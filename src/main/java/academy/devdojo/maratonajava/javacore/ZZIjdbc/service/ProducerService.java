@@ -36,12 +36,24 @@ public class ProducerService {
         ProducerRepository.showProducerMetadata();
     }
 
+    public static void showDriverMetadata (){
+        ProducerRepository.showDriverMetadata();
+    }
+
     public static void showTypeScrollWorking (){
         ProducerRepository.showTypeScrollWorking();
     }
 
-    public static void showDriverMetadata (){
-        ProducerRepository.showDriverMetadata();
+    public static List<Producer> findByNameAndUpdateToUpper (String name){
+        return ProducerRepository.findByNameAndUpdateToUpper(name);
+    }
+
+    public static List<Producer> findByNameAndInserteWhenNotFound (String name){
+        return ProducerRepository.findByNameAndInserteWhenNotFound(name);
+    }
+
+    public static void findByNameAndDelete (String name){
+        ProducerRepository.findByNameAndDelete(name);
     }
 
     private static void checkId(Integer id){
