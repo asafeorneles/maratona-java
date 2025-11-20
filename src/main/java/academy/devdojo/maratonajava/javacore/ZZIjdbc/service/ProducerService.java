@@ -69,6 +69,10 @@ public class ProducerService {
         return ProducerRepository.findByNameCallableStatement(name);
     }
 
+    public static void savePreparedStatementTransaction (List<Producer> producers){
+        ProducerRepository.savePreparedStatementTransaction(producers);
+    }
+
     private static void checkId(Integer id){
         if (id == null || id <= 0){
             throw new IllegalArgumentException("Invalid value for id");

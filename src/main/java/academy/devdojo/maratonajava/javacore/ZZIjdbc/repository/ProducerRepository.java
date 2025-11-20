@@ -345,6 +345,38 @@ public class ProducerRepository {
         return cs;
     }
 
+    public static void savePreparedStatementTransaction(List<Producer> producers) {
+        try (Connection conn = ConnectionFactory.getConnection()) {
+            conn.setAutoCommit(false);
+            preparedStatementSaveTransaction(conn, producers);
+            conn.commit();
+
+        } catch (SQLException e) {
+            log.info("Error while trying to update producers '{}'", producers, e);
+        }
+
+    }
+
+    private static void preparedStatementSaveTransaction(Connection conn, List<Producer> producers) throws SQLException {
+        boolean shouldRollBack = false;
+        String sql = "INSERT INTO `anime_store`.`producer` (`name`) VALUES (?);";
+        for (Producer p : producers){
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, p.getName());
+                if (p.getName().equals("White Fox")) throw new SQLException(String.format("Cant save %s", p.getName())); // Daqui ele vai pro catch e o ps não é executado.
+                ps.execute();
+                log.info("Inserted producer '{}' in the database.", p.getName());
+            } catch (SQLException e){
+                e.printStackTrace();
+                shouldRollBack = true;
+            }
+        }
+        if (shouldRollBack) {
+            log.warn("Transaction is going be rollback");
+            conn.rollback();
+        }
+    }
+
 }
 
 
