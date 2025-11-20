@@ -311,7 +311,7 @@ public class ProducerRepository {
     }
 
     private static PreparedStatement preparedStatementUpdate (Connection conn, Producer producer) throws SQLException {
-        String sql = "UPDATE `anime_store`.`producer` SET `name` = ? WHERE (`id` = ?);".formatted(producer.getName(), producer.getId());
+        String sql = "UPDATE `anime_store`.`producer` SET `name` = ? WHERE (`id` = ?);";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, producer.getName());
         ps.setInt(2, producer.getId());
