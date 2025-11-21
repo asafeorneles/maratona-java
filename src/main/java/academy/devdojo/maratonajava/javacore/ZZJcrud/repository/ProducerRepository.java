@@ -17,7 +17,7 @@ public class ProducerRepository {
         log.info("Finding producers by name '{}'", name);
         List<Producer> producers = new ArrayList<>();
         try (Connection conn = ConnectionFactory.getConnection();
-             PreparedStatement ps = createPreparedStatement(conn, name);
+             PreparedStatement ps = createPreparedStatementFindByName(conn, name);
              ResultSet resultSet = ps.executeQuery()) {
 
             while (resultSet.next()) {
