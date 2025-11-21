@@ -13,14 +13,14 @@ import java.util.List;
 
 @Log4j2
 public class ProducerRepository {
-    public static List<Producer> findByName(String name){
+    public static List<Producer> findByName(String name) {
         log.info("Finding producers by name '{}'", name);
         List<Producer> producers = new ArrayList<>();
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement ps = createPreparedStatement(conn, name);
-             ResultSet resultSet = ps.executeQuery()){
+             ResultSet resultSet = ps.executeQuery()) {
 
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 Producer producer = Producer.builder().id(resultSet.getInt("id")).name(resultSet.getString("name")).build();
                 producers.add(producer);
             }
@@ -31,10 +31,25 @@ public class ProducerRepository {
         return producers;
     }
 
-    private static PreparedStatement createPreparedStatement(Connection conn, String name) throws SQLException {
+    private static PreparedStatement createPreparedStatementFindByName(Connection conn, String name) throws SQLException {
         String sql = "SELECT * FROM anime_store.producer WHERE name LIKE ?;";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, String.format("%%%s%%", name));
+        return ps;
+    }
+
+    public static void delete(int id) {
+        try (Connection conn = ConnectionFactory.getConnection();
+        PreparedStatement ps = createPreparedStatementDelete(conn, id);
+        ResultSet rs = ps.executeQuery()) {
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private static PreparedStatement createPreparedStatementDelete(Connection conn, int id) throws SQLException {
+        String sql = "DELETE FROM `anime_store`.`producer` WHERE (`id` = ?);";
+        PreparedStatement ps = conn.prepareStatement(sql);
         return ps;
     }
 }
