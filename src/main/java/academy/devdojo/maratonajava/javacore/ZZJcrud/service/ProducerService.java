@@ -12,44 +12,39 @@ public class ProducerService {
 
     public static void menuProducerService(int op) {
         switch (op) {
-            case 1:
-                findByName();
-                break;
-            case 2:
-                findAll();
-                break;
-            case 3:
-                delete();
-                break;
-            default:
-                throw new IllegalArgumentException("Not a valid option");
+            case 1 -> findByName();
+            case 2 -> findAll();
+            case 3 -> delete();
+            case 4 -> save();
+            default -> throw new IllegalArgumentException("Not a valid option");
         }
     }
+
 
     public static void findByName() {
         System.out.println("Type the name to find producers or empty to find all");
         String name = SCANNER.nextLine();
-        List<Producer> producers = ProducerRepository.findByName(name);
-        for (int i = 0; i < producers.size(); i++) {
-            System.out.printf("[%d] - %s%n", producers.get(i).getId(), producers.get(i).getName());
-        }
+        ProducerRepository.findByName(name).forEach(p -> System.out.printf("[%d] - %s%n", p.getId(), p.getName()));
     }
 
-    public static void findAll(){
-        List<Producer> producers = ProducerRepository.findAll();
-        for (int i = 0; i < producers.size(); i++) {
-            System.out.printf("[%d] - %s%n", producers.get(i).getId(), producers.get(i).getName());
-        }
+    public static void findAll() {
+        ProducerRepository.findAll().forEach(p -> System.out.printf("[%d] - %s%n", p.getId(), p.getName()));
     }
 
     public static void delete() {
         findAll();
         System.out.println("Type the id to delete one producer");
         int id = Integer.parseInt(SCANNER.nextLine());
-        System.out.println("Are you sure? S/N");
+        System.out.println("Are you sure? Y/N");
         String choice = SCANNER.nextLine();
         if ("s".equalsIgnoreCase(choice)) {
             ProducerRepository.delete(id);
         }
+    }
+
+    public static void save() {
+        System.out.println("Type the name of the new producer");
+        Producer producer = Producer.builder().name(SCANNER.nextLine()).build();
+        ProducerRepository.save(producer);
     }
 }

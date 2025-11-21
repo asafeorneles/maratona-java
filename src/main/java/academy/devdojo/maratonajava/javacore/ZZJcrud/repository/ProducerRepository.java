@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 @Log4j2
 public class ProducerRepository {
@@ -38,12 +39,12 @@ public class ProducerRepository {
         return ps;
     }
 
-    public static List<Producer> findAll(){
+    public static List<Producer> findAll() {
         List<Producer> producers = new ArrayList<>();
         try (Connection conn = ConnectionFactory.getConnection();
-        PreparedStatement ps = createPreparedStatementfindAll(conn);
-        ResultSet rs = ps.executeQuery()){
-            while (rs.next()){
+             PreparedStatement ps = createPreparedStatementfindAll(conn);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
                 Producer producer = Producer.builder().id(rs.getInt("id")).name(rs.getString("name")).build();
                 producers.add(producer);
             }
@@ -62,17 +63,36 @@ public class ProducerRepository {
 
     public static void delete(int id) {
         try (Connection conn = ConnectionFactory.getConnection();
-        PreparedStatement ps = createPreparedStatementDelete(conn, id)) {
+             PreparedStatement ps = createPreparedStatementDelete(conn, id)) {
             ps.execute(); // Dentro do bloco try
             log.info("Deleted producer '{}' from database", id);
         } catch (SQLException e) {
             log.info("Error while trying to delete producer '{}'", id, e);
         }
     }
+
     private static PreparedStatement createPreparedStatementDelete(Connection conn, int id) throws SQLException {
         String sql = "DELETE FROM `anime_store`.`producer` WHERE (`id` = ?);";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setInt(1, id);
+        return ps;
+    }
+
+    public static void save(Producer producer) {
+        try (Connection conn = ConnectionFactory.getConnection();
+        PreparedStatement ps = createPreparedStatementSave(conn, producer)) {
+            ps.execute();
+            log.info("Inserted producer '{}' in the database", producer.getName());
+
+        } catch (SQLException e) {
+            log.info("Error while trying to inserte producer '{}'", producer.getName(), e);
+        }
+    }
+
+    private static PreparedStatement createPreparedStatementSave(Connection conn, Producer producer) throws SQLException {
+        String sql = "INSERT INTO `anime_store`.`producer` (`name`) VALUES (?);";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, producer.getName());
         return ps;
     }
 }
