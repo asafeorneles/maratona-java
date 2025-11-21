@@ -20,7 +20,9 @@ public class ProducerServiceTest01 {
     private static void producerMenu(){
         System.out.println("Type thje number of your operation");
 
-        System.out.println("1. SearchYourName");
+        System.out.println("1. Search Your Name");
+        System.out.println("2. Search All");
+        System.out.println("3. Delete");
         System.out.println("0. Exit");
     }
 }

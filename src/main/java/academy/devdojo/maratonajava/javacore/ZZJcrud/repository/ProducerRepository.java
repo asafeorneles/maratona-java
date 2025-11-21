@@ -38,18 +38,41 @@ public class ProducerRepository {
         return ps;
     }
 
-    public static void delete(int id) {
+    public static List<Producer> findAll(){
+        List<Producer> producers = new ArrayList<>();
         try (Connection conn = ConnectionFactory.getConnection();
-        PreparedStatement ps = createPreparedStatementDelete(conn, id);
-        ResultSet rs = ps.executeQuery()) {
+        PreparedStatement ps = createPreparedStatementfindAll(conn);
+        ResultSet rs = ps.executeQuery()){
+            while (rs.next()){
+                Producer producer = Producer.builder().id(rs.getInt("id")).name(rs.getString("name")).build();
+                producers.add(producer);
+            }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.info("Error while trying to findAll producers", e);
+        }
+        return producers;
+    }
+
+    private static PreparedStatement createPreparedStatementfindAll(Connection conn) throws SQLException {
+        String sql = "SELECT * FROM anime_store.producer";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        return ps;
+    }
+
+    public static void delete(int id) {
+        try (Connection conn = ConnectionFactory.getConnection();
+        PreparedStatement ps = createPreparedStatementDelete(conn, id)) {
+            ps.execute(); // Dentro do bloco try
+            log.info("Deleted producer '{}' from database", id);
+        } catch (SQLException e) {
+            log.info("Error while trying to delete producer '{}'", id, e);
         }
     }
     private static PreparedStatement createPreparedStatementDelete(Connection conn, int id) throws SQLException {
         String sql = "DELETE FROM `anime_store`.`producer` WHERE (`id` = ?);";
         PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1, id);
         return ps;
     }
 }
