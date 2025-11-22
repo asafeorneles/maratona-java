@@ -24,6 +24,7 @@ public class ProducerServiceTest01 {
         System.out.println("2. Search All");
         System.out.println("3. Delete");
         System.out.println("4. Save");
+        System.out.println("5. Update");
         System.out.println("0. Exit");
     }
 }
