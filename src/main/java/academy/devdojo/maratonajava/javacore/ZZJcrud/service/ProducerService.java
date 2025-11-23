@@ -21,9 +21,6 @@ public class ProducerService {
         }
     }
 
-
-
-
     public static void findByName() {
         System.out.println("Type the name to find producers or empty to find all");
         String name = SCANNER.nextLine();
@@ -40,7 +37,7 @@ public class ProducerService {
         int id = Integer.parseInt(SCANNER.nextLine());
         System.out.println("Are you sure? Y/N");
         String choice = SCANNER.nextLine();
-        if ("s".equalsIgnoreCase(choice)) {
+        if ("y".equalsIgnoreCase(choice)) {
             ProducerRepository.delete(id);
         }
     }
@@ -52,6 +49,7 @@ public class ProducerService {
     }
 
     private static void update() {
+        findAll();
         System.out.println("Type the id of producer you want update");
         Optional<Producer> producerOptional = ProducerRepository.findById(Integer.parseInt(SCANNER.nextLine()));
         if (producerOptional.isEmpty()){
