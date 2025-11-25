@@ -16,7 +16,7 @@ class MangaTest {
     }
 
     @Test
-    public void acessors_ReturnData_WhenMangaIsSerialized(){
+    public void accessors_ReturnData_WhenMangaIsSerialized(){
         Assertions.assertEquals("Kimetsu no Yaiba", manga1.name());
         Assertions.assertEquals(24, manga1.episodes());
     }
